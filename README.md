@@ -1,1 +1,15 @@
-# iUUL-Desafio2.1
+# Desafio #2.1 - Conversor de Moedas com acesso a API REST
+**Formação Back-End - Node.js / Express**
+
+Neste projeto, foi desenvolvido um conversor de moedas utilizando JavaScript, com o auxílio de algumas bibliotecas e a integração com uma API externa para obter taxas de câmbio. O fluxo do projeto foi dividido em várias funcionalidades que se comunicam entre si para realizar a conversão de valores de uma moeda para outra.
+
+## Estrutura
+O **arquivo `conversor.js`** é o ponto de entrada do programa, onde o usuário é interativo por meio do terminal. Através da biblioteca `prompt-sync`, o código solicita ao usuário as informações necessárias: a moeda de origem, a moeda de destino e o valor a ser convertido. Esses dados são então passados para a função `obterValor`, que realiza o processamento da conversão. Caso o usuário insira dados inválidos ou decida encerrar o programa, há verificações que interrompem o fluxo.
+
+No **arquivo `tratarValores.js`**, a função principal é a `obterValor`, que recebe os dados inseridos pelo usuário e trata a conversão. Primeiramente, as entradas são validadas por meio da função `validarEntradas`, definida no arquivo `organizarValores.js`. Se algum erro for identificado nas entradas (como valores nulos, moedas iguais, ou a ausência de caracteres corretos nas siglas das moedas), o fluxo de execução é interrompido, e uma mensagem de erro é retornada. Se as entradas forem válidas, a taxa de conversão entre as moedas é obtida via a função `obterCambio` no arquivo `ExchangeRateService.js`, utilizando a API de taxas de câmbio. O valor resultante da multiplicação entre a taxa e o valor inserido é formatado e retornado para ser exibido ao usuário.
+
+O **arquivo `organizarValores.js`** contém funções utilitárias para validar e formatar os dados. A função `validarEntradas` checa se os parâmetros inseridos pelo usuário são válidos, verificando se as moedas são diferentes, se ambas possuem exatamente 3 caracteres e se o valor de entrada é maior que zero. Caso qualquer uma dessas condições não seja atendida, a função retorna um objeto com uma mensagem de erro. A função `formatarValor` apenas garante que o valor de saída da conversão seja exibido com duas casas decimais.
+
+O **arquivo `ExchangeRateService.js`** é responsável pela comunicação com a API externa que fornece as taxas de câmbio entre diferentes moedas. Usando a biblioteca `axios` para realizar requisições HTTP, a função `obterCambio` consulta a API e retorna a taxa de conversão entre as moedas solicitadas. Caso a resposta da API seja bem-sucedida, a taxa de câmbio é extraída e usada para calcular o valor convertido. Se ocorrer qualquer erro durante a requisição, uma mensagem de erro é lançada.
+
+Em resumo, o projeto cria uma ferramenta de conversão de moedas robusta que lida com a validação dos dados de entrada, consulta de taxas de câmbio em tempo real, e exibe os resultados de forma formatada. A arquitetura foi projetada para ser modular, permitindo que diferentes partes do código sejam facilmente atualizadas ou substituídas.
